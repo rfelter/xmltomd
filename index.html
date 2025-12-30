@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Converti file XML esportati da WordPress in formato Markdown per analisi AI del tone of voice - by Felter Roberto">
+    <title>WordPress XML to Markdown Converter | Felter.it</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-circle">RF</div>
+                <h1>WP XML → Markdown</h1>
+            </div>
+            <p class="subtitle">Converti i tuoi contenuti WordPress per l'analisi AI del tone of voice</p>
+            <div class="author-badge">
+                <span>Sviluppato da</span>
+                <a href="https://www.felter.it" target="_blank" rel="noopener">Felter Roberto</a>
+            </div>
+        </header>
+
+        <main class="main">
+            <section id="upload-section" class="upload-section">
+                <div class="upload-zone" id="dropZone">
+                    <div class="upload-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="17,8 12,3 7,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2>Trascina il tuo file XML qui</h2>
+                    <p>oppure clicca per selezionarlo</p>
+                    <span class="file-types">Supporta file .xml esportati da WordPress</span>
+                    <input type="file" id="fileInput" accept=".xml" hidden>
+                </div>
+                <div class="file-info" id="fileInfo" hidden>
+                    <div class="file-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="file-details">
+                        <span class="file-name" id="fileName"></span>
+                        <span class="file-size" id="fileSize"></span>
+                    </div>
+                    <button class="btn-remove" id="removeFile" title="Rimuovi file">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <section id="stats-section" class="stats-section" hidden>
+                <h3>Contenuti trovati</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value" id="postCount">0</span>
+                        <span class="stat-label">Articoli</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="pageCount">0</span>
+                        <span class="stat-label">Pagine</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="categoryCount">0</span>
+                        <span class="stat-label">Categorie</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="tagCount">0</span>
+                        <span class="stat-label">Tag</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="preview-section" class="preview-section" hidden>
+                <div class="preview-header">
+                    <h3>Anteprima Markdown</h3>
+                    <div class="preview-actions">
+                        <button class="btn-secondary" id="copyBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Copia
+                        </button>
+                        <button class="btn-primary" id="downloadBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Scarica .md
+                        </button>
+                    </div>
+                </div>
+                <div class="preview-content">
+                    <pre id="previewText"></pre>
+                </div>
+            </section>
+
+            <section id="loading-section" class="loading-section" hidden>
+                <div class="spinner"></div>
+                <p>Conversione in corso...</p>
+            </section>
+
+            <section id="error-section" class="error-section" hidden>
+                <div class="error-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                    </svg>
+                </div>
+                <h3>Errore durante la conversione</h3>
+                <p id="errorMessage"></p>
+                <button class="btn-secondary" id="retryBtn">Riprova</button>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Realizzato da <a href="https://www.felter.it" target="_blank" rel="noopener">Felter Roberto</a> per l'analisi del tone of voice con AI</p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast" hidden>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
